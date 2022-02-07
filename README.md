@@ -1,6 +1,8 @@
 # Pewlett-Hackard-Analysis
 
-This project uses Postgresql v11.14 for sql and pgadmin 4 v5.7 for database creation and query execution. schema.sql and queries.sql were run to fill the database PH-EmployeeDB in pgAdmin 4 for this project.
+This project uses Postgresql v11.14 for sql and pgadmin 4 v5.7 for database creation and query execution. schema.sql was run to fill the database PH-EmployeeDB in pgAdmin 4 for this project. The data was then imported into the database following the ERD below. queries.sql was run to join and filter data for this project.
+
+![ERD](/EmployeeDB.png )
 
 ## Overview of the analysis: 
 
