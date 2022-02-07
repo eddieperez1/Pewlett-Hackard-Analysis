@@ -83,7 +83,7 @@ ORDER BY COUNT(emp_no) DESC
 - There are 72,458 employees in the retiring range of birth date between January 01, 1952 and December 31, 1955.
 - There are 1,549 employees eligible to mentor with birth date between January 01, 1965 and December 31, 1965.
 - Senior Engineer and Senior Staff have the largest number of employees in the retiring range of birth date between January 01, 1952 and December 31, 1955.
-- 101% of employees are in the retiring range of birth date between January 01, 1952 and December 31, 1955.
+- 24.15% of all employees in the company are in the retiring range of birth date between January 01, 1952 and December 31, 1955.
 
 ## Summary: 
 
