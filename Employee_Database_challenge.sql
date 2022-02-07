@@ -121,8 +121,10 @@ ORDER BY COUNT(title) DESC
 --SELECT DISTINCT ON(e.emp_no) e.emp_no,
 --      e.first_name,
 --      e.last_name, 
---      de.birth_date,
---      t.titles
+--      e.birth_date,
+--      ti.from_date,
+--   	ti.to_date,
+--      ti.title
 --FROM employee AS e
 
 --Step 5: Create a new table using the INTO clause.
@@ -134,4 +136,34 @@ ORDER BY COUNT(title) DESC
 
 --Step 7: Join the Employees and the Titles tables on the primary key.
 --JOIN titles AS t
---ON de.dept_no = t.dept_no
+--ON de.emp_no = t.emp_no
+
+--Step 8: Filter the data on the to_date column to all the current employees, then filter the data on the birth_date columns to get all the employees 
+--          whose birth dates are between January 1, 1965 and December 31, 1965.
+--WHERE (to_date = '9999-01-01')
+--AND (birth_date BETWEEN '1965-01-01' AND '1965-12-31')
+
+--Step 9: Order the table by the employee number.
+--ORDER BY e.emp_no
+
+--Completed Query
+SELECT DISTINCT ON(e.emp_no) e.emp_no,
+    e.first_name,
+    e.last_name, 
+    e.birth_date,
+	ti.from_date,
+	ti.to_date,
+    ti.title
+INTO mentorship_eligibility
+FROM employees AS e
+JOIN dept_emp AS de
+ON  e.emp_no = de.emp_no
+JOIN titles AS ti
+ON de.emp_no = ti.emp_no
+WHERE (ti.to_date = '9999-01-01')
+AND (e.birth_date BETWEEN '1965-01-01' AND '1965-12-31')
+ORDER BY e.emp_no
+
+--Step 10: Export the Mentorship Eligibility table as mentorship_eligibilty.csv and save it to your Data folder in the Pewlett-Hackard-Analysis folder.
+
+--Step 11: Check if query looks correct
