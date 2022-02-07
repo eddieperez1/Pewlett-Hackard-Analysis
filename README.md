@@ -2,20 +2,95 @@
 
 This project uses Postgresql v11.14 for sql and pgadmin 4 v5.7 for database creation and query execution. 
 
-### Overview of the analysis: 
+## Overview of the analysis: 
 
 The purpose of this project is to help a fake company Pewlett-Hackard with employee information to investagate possible retiring employees. The data will be imported into a local database using pgadmin 4 and then queries will be performed to organize the data. With the results queries, the number of retiring employees per title will be determined, and employees who are eligible to participate in a mentorship program will be identified. Then, the results will be summarized.
 
-### Results: 
+## Results: 
 
 ## Deliverable 1: The Number of Retiring Employees by Title
 
+### Query 1
+```
+SELECT e.emp_no, e.first_name, e.last_name, t.title, t.from_date, t.to_date
+INTO retirement_titles
+FROM employees AS e
+JOIN Titles AS t
+ON e.emp_no = t.emp_no
+WHERE e.birth_date BETWEEN '1952-01-01' AND '1955-12-31'
+ORDER BY e.emp_no
+```
+### Query 2
+```
+SELECT DISTINCT ON (emp_no) emp_no,first_name,last_name
+INTO unique_titles
+FROM retirement_titles
+WHERE to_date = '9999-01-01'
+ORDER BY emp_no, to_date DESC
+```
+### Query 3
+```
+SELECT COUNT(title), title
+INTO retiring_titles
+FROM unique_titles
+GROUP BY title
+ORDER BY COUNT(title) DESC
+```
 ## Deliverable 2: The Employees Eligible for the Mentorship Program
+
+### Query 4
+```
+SELECT DISTINCT ON(e.emp_no) e.emp_no,
+    e.first_name,
+    e.last_name, 
+    e.birth_date,
+	ti.from_date,
+	ti.to_date,
+    ti.title
+INTO mentorship_eligibility
+FROM employees AS e
+JOIN dept_emp AS de
+ON  e.emp_no = de.emp_no
+JOIN titles AS ti
+ON de.emp_no = ti.emp_no
+WHERE (ti.to_date = '9999-01-01')
+AND (e.birth_date BETWEEN '1965-01-01' AND '1965-12-31')
+ORDER BY e.emp_no
+```
 
 Provide a bulleted list with four major points from the two analysis deliverables. Use images as support where needed.
 
-### Summary: 
+## Summary: 
 
 Provide high-level responses to the following questions, then provide two additional queries or tables that may provide more insight into the upcoming "silver tsunami."
 How many roles will need to be filled as the "silver tsunami" begins to make an impact?
 Are there enough qualified, retirement-ready employees in the departments to mentor the next generation of Pewlett Hackard employees?
+
+### Query 5
+```
+SELECT COUNT(emp_no), title FROM mentorship_eligibility
+GROUP BY title
+ORDER BY COUNT(emp_no) DESC
+```
+### Query 6
+```
+SELECT d.dept_name, COUNT(d.dept_no)
+FROM retirement_info as ri
+JOIN dept_emp AS de
+ON ri.emp_no = de.emp_no
+JOIN departments AS d
+ON de.dept_no = d.dept_no
+GROUP BY dept_name
+ORDER BY COUNT(d.dept_no) DESC
+```
+### Query 7
+```
+SELECT d.dept_name, COUNT(d.dept_no)
+FROM mentorship_eligibility as me
+JOIN dept_emp AS de
+ON me.emp_no = de.emp_no
+JOIN departments AS d
+ON de.dept_no = d.dept_no
+GROUP BY dept_name
+ORDER BY COUNT(d.dept_no) DESC
+```
