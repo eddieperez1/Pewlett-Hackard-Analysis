@@ -85,12 +85,9 @@ ORDER BY COUNT(emp_no) DESC
 
 ## Summary: 
 
-Provide high-level responses to the following questions, then provide two additional queries or tables that may provide more insight into the upcoming "silver tsunami."
+72,458 roles will need to be filled as the employees whose birth date is between January 01, 1952 and December 31, 1955 begin to retire. There are not enough qualified, retirement-ready employees in the departments to mentor the next generation of Pewlett Hackard employees since the number of employees in retiring range is 46 times larger than number of employee eligible to mentor.
 
-How many roles will need to be filled as the "silver tsunami" begins to make an impact?
-
-Are there enough qualified, retirement-ready employees in the departments to mentor the next generation of Pewlett Hackard employees?
-
+To further the analysis, query 6 and query 7 find the number of retiring employees by department and the number of employees eligible to mentor by department respectively. These insights give which departments are in need hiring after employees whose birth date is between January 01, 1952 and December 31, 1955 retire and which departments have employees eligible to mentor.
 
 ### Query 6
 ```
@@ -103,6 +100,8 @@ ON de.dept_no = d.dept_no
 GROUP BY dept_name
 ORDER BY COUNT(d.dept_no) DESC
 ```
+![retiring employees by department](/screenshots/screenshot_of_retirement_info_count_by_department.PNG)
+
 ### Query 7
 ```
 SELECT d.dept_name, COUNT(d.dept_no)
@@ -114,3 +113,5 @@ ON de.dept_no = d.dept_no
 GROUP BY dept_name
 ORDER BY COUNT(d.dept_no) DESC
 ```
+
+![mentorship eligibility by department](/screenshots/screenshot_of_mentorship_count_by_department.PNG)
